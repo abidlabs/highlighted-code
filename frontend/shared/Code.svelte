@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { ViewUpdate } from "@codemirror/view";
 	import { createEventDispatcher, onMount } from "svelte";
 	import {
+		Decoration,
 		EditorView,
+		ViewUpdate,
 		keymap,
 		placeholder as placeholderExt
 	} from "@codemirror/view";
@@ -22,7 +23,7 @@
 	export let language: string;
 	export let lines = 5;
 	export let extensions: Extension[] = [];
-
+	export let highlights: [number, string][] = [];
 	export let useTab = true;
 
 	export let readonly = false;
@@ -47,6 +48,18 @@
 	$: reconfigure(), lang_extension;
 	$: setDoc(value);
 	$: updateLines();
+
+	function highlight_lines(root_element: HTMLDivElement) {
+		const lines = root_element.querySelectorAll('.cm-line');
+		let old_color = 'transparent';
+		lines.forEach((e, index) => {
+			const line_number = index + 1;
+			let new_color = highlights.find(([l, c]) => l === line_number)?.[1] ?? old_color;
+			e.style.backgroundColor = new_color;
+			old_color = new_color;
+    	});
+	}
+
 
 	function setDoc(newDoc: string): void {
 		if (view && newDoc !== view.state.doc.toString()) {
@@ -110,6 +123,7 @@
 			let node = gutters[i];
 			node.style.minHeight = `calc(${lineHeight} * ${_lines})`;
 		}
+		highlight_lines(element);
 		return null;
 	}
 

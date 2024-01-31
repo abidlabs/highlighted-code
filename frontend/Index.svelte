@@ -36,6 +36,7 @@
 	export let show_label = true;
 	export let loading_status: LoadingStatus;
 	export let scale: number | null = null;
+	export let highlights: [number, string][] = [];
 
 	export let interactive: boolean;
 
@@ -81,6 +82,7 @@
 			{language}
 			{lines}
 			{dark_mode}
+			{highlights}
 			readonly={!interactive}
 			on:blur={() => gradio.dispatch("blur")}
 			on:focus={() => gradio.dispatch("focus")}

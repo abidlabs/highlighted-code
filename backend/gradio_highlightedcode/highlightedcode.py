@@ -95,7 +95,7 @@ class HighlightedCode(Component):
 
         self.language = language
         self.lines = lines
-        self.highlights = highlights
+        self.highlights = highlights or []
         super().__init__(
             label=label,
             every=every,
