@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gradio_highlightedcode"
-version = "0.0.1"
+version = "0.0.2"
 description = "A variant of the Code component that supports highlighting lines of code."
 readme = "README.md"
 license = "MIT"
@@ -36,7 +36,7 @@ classifiers = [
 dev = ["build", "twine"]
 
 [tool.hatch.build]
-artifacts = ["/backend/gradio_highlightedcode/templates", "*.pyi", "backend/gradio_highlightedcode/templates"]
+artifacts = ["/backend/gradio_highlightedcode/templates", "*.pyi", "backend/gradio_highlightedcode/templates", "backend/gradio_highlightedcode/templates"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["/backend/gradio_highlightedcode"]

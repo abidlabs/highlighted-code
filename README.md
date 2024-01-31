@@ -1,6 +1,6 @@
 
 # `gradio_highlightedcode`
-<img alt="Static Badge" src="https://img.shields.io/badge/version%20-%200.0.1%20-%20orange">  
+<a href="https://pypi.org/project/gradio_highlightedcode/" target="_blank"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/gradio_highlightedcode"></a>  
 
 A variant of the Code component that supports highlighting lines of code.
 
@@ -14,19 +14,35 @@ pip install gradio_highlightedcode
 
 ```python
 
+import time
 import gradio as gr
 from gradio_highlightedcode import HighlightedCode
 
 
 example = HighlightedCode().example_inputs()
 
-demo = gr.Interface(
-    lambda x:x,
-    HighlightedCode(),  # interactive version of your component
-    HighlightedCode(),  # static version of your component
-    # examples=[[example]],  # uncomment this line to view the "example version" of your component
-)
+initial_value = """import random
 
+def scramble_name(name):
+    name_list = list(name)
+"""
+
+completion = """    random.shuffle(name_list)
+    return ''.join(name_list)
+
+# Example usage:
+print(scramble_name("Python"))
+"""
+
+def generate_code():
+    for i in range(len(completion)):
+        time.sleep(0.03)
+        yield HighlightedCode(initial_value + completion[:i], highlights=[(5, "rgb(255 254 213)")])
+
+with gr.Blocks() as demo:
+    code = HighlightedCode(initial_value, language="python")
+    btn = gr.Button("Generate", variant="primary")
+    btn.click(generate_code, outputs=code)
 
 if __name__ == "__main__":
     demo.launch()
