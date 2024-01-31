@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from "svelte";
 	import {
-		Decoration,
 		EditorView,
 		ViewUpdate,
 		keymap,
